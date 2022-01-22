@@ -5,17 +5,17 @@
 
 I uploaded my data to s3 and which sagemaker has access to 
 
- [s3](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/s3%20bucket.PNG)
+ ![s3](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/s3%20bucket.PNG)
 
- [Instance](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Notebook%20Instance.PNG)
+ ![Instance](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Notebook%20Instance.PNG)
  
  For the training jobs, since deep learning model trainings often require a large compute power, `ml.m5.2xlarge` was the perfect instance for this project. To speed up the training, I also increased the instance count from 1 to 7 to enable Multi Instance Training. Things like raising the `max_job`, `max_parallel_jobs` could significantly increase the training speed. I deployed two endpoints for the Single Instance Trained Model and the Multi Instance Trained Model as shown below.
- [Endpoints](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Endpoints.PNG)
+ ![Endpoints](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Endpoints.PNG)
  The first one being the Multi Instance Trained Model, while the second is the Single Instance Trained Model.
  
  ## Training on EC2
  Another option to save costs is to train your models in an EC2 instance. I used `t3.xlarge` instance with `Deep Learning AMI (Amazon Linux 2) Version 54.0` perfect for this project without needing to install additional dependencies for deep learning and affordable also. Since the training will be in the EC2 instance, we do need a little bit of compute power and its safe to say `t3.xlarge` performed just great optimizing for both costs and compute power. I take security so seriously which is why I limit access to my EC2 to only my IP address.
-[SG](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/SG.PNG)
+![SG](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/SG.PNG)
 
  ## Differences between ec2train.py and hpo(1).py
  ec2train.py does not support Multi Instance Training unlike hpo(1).py which is used as an argument in train_and_deploy-solution.ipynb. Talking about argument, ec2train.py cant even handle argument parsing unlike hpo(1).py which can parse arguments.
@@ -44,17 +44,17 @@ I must say that security is the most important aspect of a production system and
 * Lambda having access to SageMaker instead of just being able to hit the endpoint. 
 If not taken care of, this issues could lead to devastating results.
 
-[MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/IAM%20Dashboard.PNG)
+![MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/IAM%20Dashboard.PNG)
 
-[MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Security.PNG)
+![MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Security.PNG)
 
-[MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Permissions.PNG)
+![MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Permissions.PNG)
 
-[MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Roles.PNG)
+![MFA](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Roles.PNG)
 
 ## Concurrency and auto-scaling
 
 Concurrency is to allow lambda attend to multiple requests at a time. I used provisioned concurrency because it enables my lambda function to scale without fluctuations in latency. No one wants a slow response, slow responses chase away customers. I also autoscaled my endpoint to serve for any potential cpu bottlenecks.   
  
-[Concurrency](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Concurrency.PNG)
- [Concurrency](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/AutoScaling.PNG)
+![Concurrency](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/Concurrency.PNG)
+ ![Concurrency](https://github.com/Bash-mocart/operationalizing_ml_models_on_sagemaker/blob/main/images/AutoScaling.PNG)
